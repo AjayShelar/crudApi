@@ -1,0 +1,84 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Backend passbird
+
+  SAM Template for backend
+
+Globals:
+  Function:
+    Timeout: 60
+
+Parameters:
+  Table:
+    Type: String
+    Default: Applications
+  Region:
+    Type: String
+    Default: ap-south-1
+  AWSEnv:
+    Type: String
+    Default: AWS
+
+Resources:
+  CreateApplicationFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/create_application/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Environment:
+        Variables:
+          TABLE: !Ref Table
+          REGION: !Ref Region
+          AWSENV: !Ref AWSEnv
+      Events:
+        CreateApplications:
+          Type: Api
+          Properties:
+            Path: /applications
+            Method: post
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ApplicationsTable
+  
+  ListApplicationsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/list_applications/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Environment:
+        Variables:
+          TABLE: !Ref Table
+          REGION: !Ref Region
+          AWSENV: !Ref AWSEnv
+      Events:
+        CreateApplications:
+          Type: Api
+          Properties:
+            Path: /applications/
+            Method: get
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ApplicationsTable
+  
+  
+Outputs:
+  ApplicationsApi:
+    Description: "API Gateway endpoint URL for Prod stage for Create Application Function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/Applications/"
+  CreateApplicationFunction:
+    Description: "Create Application Lambda Function ARN"
+    Value: !GetAtt CreateApplicationFunction.Arn
+  CreateApplicationFunctionIamRole:
+    Description: "Implicit IAM Role created for Create Application function"
+    Value: !GetAtt CreateApplicationFunctionRole.Arn
+  
+  ListApplicationsFunction:
+    Description: "List Applications Lambda Function ARN"
+    Value: !GetAtt ListApplicationsFunction.Arn
+  ListApplicationsFunctionIamRole:
+    Description: "Implicit IAM Role created for List Applications function"
+    Value: !GetAtt ListApplicationsFunctionRole.Arn
+  

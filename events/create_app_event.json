@@ -1,0 +1,83 @@
+{
+  "body":"{\n    \"username\": \"kijay@gmail.com\",\n    \"name\": \"eth0\",\n    \"chain\": \"Etherium\",\n    \"id\": \"asdlasldas\",\n    \"secret\": \"dawe23dw4\"\n}",
+  "headers":{
+     "Accept":"*/*",
+     "Accept-Encoding":"gzip, deflate, br",
+     "Connection":"keep-alive",
+     "Content-Length":"133",
+     "Content-Type":"application/json",
+     "Host":"127.0.0.1:3000",
+     "Postman-Token":"5c99b0ad-07bc-4ae5-890a-acf96c831e14",
+     "User-Agent":"PostmanRuntime/7.29.0",
+     "X-Forwarded-Port":"3000",
+     "X-Forwarded-Proto":"http"
+  },
+  "httpMethod":"POST",
+  "isBase64Encoded":false,
+  "multiValueHeaders":{
+     "Accept":[
+        "*/*"
+     ],
+     "Accept-Encoding":[
+        "gzip, deflate, br"
+     ],
+     "Connection":[
+        "keep-alive"
+     ],
+     "Content-Length":[
+        "133"
+     ],
+     "Content-Type":[
+        "application/json"
+     ],
+     "Host":[
+        "127.0.0.1:3000"
+     ],
+     "Postman-Token":[
+        "5c99b0ad-07bc-4ae5-890a-acf96c831e14"
+     ],
+     "User-Agent":[
+        "PostmanRuntime/7.29.0"
+     ],
+     "X-Forwarded-Port":[
+        "3000"
+     ],
+     "X-Forwarded-Proto":[
+        "http"
+     ]
+  },
+  "multiValueQueryStringParameters":"None",
+  "path":"/applications",
+  "pathParameters":"None",
+  "queryStringParameters":"None",
+  "requestContext":{
+     "accountId":"123456789012",
+     "apiId":"1234567890",
+     "domainName":"127.0.0.1:3000",
+     "extendedRequestId":"None",
+     "httpMethod":"POST",
+     "identity":{
+        "accountId":"None",
+        "apiKey":"None",
+        "caller":"None",
+        "cognitoAuthenticationProvider":"None",
+        "cognitoAuthenticationType":"None",
+        "cognitoIdentityPoolId":"None",
+        "sourceIp":"127.0.0.1",
+        "user":"None",
+        "userAgent":"Custom User Agent String",
+        "userArn":"None"
+     },
+     "path":"/applications",
+     "protocol":"HTTP/1.1",
+     "requestId":"68e667a2-860b-417b-abdf-663e097649e7",
+     "requestTime":"26/Apr/2022:02:45:30 +0000",
+     "requestTimeEpoch":1650941130,
+     "resourceId":"123456",
+     "resourcePath":"/applications",
+     "stage":"Prod"
+  },
+  "resource":"/applications",
+  "stageVariables":"None",
+  "version":"1.0"
+}

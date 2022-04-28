@@ -1,0 +1,181 @@
+{
+	"info": {
+		"_postman_id": "c022c90c-7cf2-4e84-ae73-4d874564f192",
+		"name": "Application Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create Application",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"ajay@gmail.com\",\n    \"name\": \"eth0\",\n    \"chain\": \"Bitcoin\",\n    \"id\": \"wqe123e23e\",\n    \"secret\": \"dawe23dw4\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/applications",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"applications"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": " http://127.0.0.1:3000/applications",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"ajay@gmail.com\",\n    \"name\": \"eth0\",\n    \"chain\": \"Etherium\",\n    \"id\": \"asdlasldas\",\n    \"secret\": \"dawe23dw4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/applications",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"applications"
+							]
+						}
+					},
+					"status": "CREATED",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "30"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/1.0.1 Python/3.8.12"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 26 Apr 2022 02:30:16 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"msg\": \"Application created\"\n}"
+				}
+			]
+		},
+		{
+			"name": "list  applications",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3000/applications?username=ajay@gmail.com",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"applications"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "ajay@gmail.com"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "list  applications",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3000/applications?username=ajay@gmail.com",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"applications"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "ajay@gmail.com"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "249"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/1.0.1 Python/3.8.12"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 26 Apr 2022 02:30:28 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"name\": \"eth0\",\n        \"chain\": \"Bitcoin\",\n        \"id\": \"wqe123e23e\",\n        \"secret\": \"dawe23dw4\",\n        \"created_on\": \"1650939937\"\n    },\n    {\n        \"name\": \"eth0\",\n        \"chain\": \"Etherium\",\n        \"id\": \"asdlasldas\",\n        \"secret\": \"dawe23dw4\",\n        \"created_on\": \"1650940216\",\n        \"username\": \"ajay@gmail.com\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Access Token Generator",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

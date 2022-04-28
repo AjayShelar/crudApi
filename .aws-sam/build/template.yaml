@@ -1,0 +1,100 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'Backend passbird
+
+  SAM Template for backend
+
+  '
+Globals:
+  Function:
+    Timeout: 900
+    MemorySize: 512
+  Api:
+    Cors:
+      AllowMethods: '''GET,POST'''
+      AllowHeaders: '''*'''
+      AllowOrigin: '''*'''
+      AllowCredentials: '''*'''
+Parameters:
+  AWSAccessKeyID:
+    Type: String
+    Default: AKIAXXKJPZR2EMB6ADGH
+  AWSSecretAccessKey:
+    Type: String
+    Default: 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
+  Table:
+    Type: String
+    Default: Applications
+  Region:
+    Type: String
+    Default: ap-south-1
+  AWSEnv:
+    Type: String
+    Default: UAT
+Resources:
+  passBirdAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Cors: '''*'''
+      Auth:
+        ApiKeyRequired: true
+        DefaultAuthorizer: MyCognitoAuthorizer
+        Authorizers:
+          MyCognitoAuthorizer:
+            UserPoolArn: arn:aws:cognito-idp:ap-south-1:531119459444:userpool/ap-south-1_vUrHcXAzK
+            AuthorizationScopes:
+            - passBirdAppProd/create
+            - passBirdAppProd/read
+  CreateApplicationFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: CreateApplicationFunction
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Environment:
+        Variables:
+          TABLE:
+            Ref: Table
+          REGION:
+            Ref: Region
+          AWSENV:
+            Ref: AWSEnv
+      Events:
+        CreateApplications:
+          Type: Api
+          Properties:
+            Path: /applications
+            Method: post
+            RestApiId:
+              Ref: passBirdAPI
+    Metadata:
+      SamResourceId: CreateApplicationFunction
+  ListApplicationsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ListApplicationsFunction
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Environment:
+        Variables:
+          TABLE:
+            Ref: Table
+          REGION:
+            Ref: Region
+          AWSENV:
+            Ref: AWSEnv
+      Events:
+        ListApplicationsFunction:
+          Type: Api
+          Properties:
+            Path: /applications
+            Method: get
+            RestApiId:
+              Ref: passBirdAPI
+          Request:
+            Parameter: true
+            QueryStrings:
+              username: true
+    Metadata:
+      SamResourceId: ListApplicationsFunction

@@ -7,9 +7,23 @@ Description: >
 
 Globals:
   Function:
-    Timeout: 60
+    Timeout: 900
+    MemorySize: 512
+
+  Api:
+    Cors:
+      AllowMethods: "'GET,POST'"
+      AllowHeaders: "'*'"
+      AllowOrigin: "'*'"
+      AllowCredentials: "'*'"
 
 Parameters:
+  AWSAccessKeyID:
+    Type: String
+    Default: AKIAXXKJPZR2EMB6ADGH
+  AWSSecretAccessKey:
+    Type: String
+    Default: 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
   Table:
     Type: String
     Default: Applications
@@ -18,15 +32,31 @@ Parameters:
     Default: ap-south-1
   AWSEnv:
     Type: String
-    Default: AWS
+    Default: UAT
 
 Resources:
+  passBirdAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Cors: "'*'"
+      Auth:
+        ApiKeyRequired: true
+        DefaultAuthorizer: MyCognitoAuthorizer
+        Authorizers:
+          MyCognitoAuthorizer:
+            UserPoolArn: arn:aws:cognito-idp:ap-south-1:531119459444:userpool/ap-south-1_vUrHcXAzK
+            AuthorizationScopes:
+              - passBirdAppProd/create
+              - passBirdAppProd/read
+
+
   CreateApplicationFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: src/create_application/
       Handler: app.lambda_handler
-      Runtime: python3.8
+      Runtime: python3.9
       Environment:
         Variables:
           TABLE: !Ref Table
@@ -38,47 +68,33 @@ Resources:
           Properties:
             Path: /applications
             Method: post
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref ApplicationsTable
+            RestApiId: !Ref passBirdAPI
   
   ListApplicationsFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: src/list_applications/
       Handler: app.lambda_handler
-      Runtime: python3.8
+      Runtime: python3.9
       Environment:
         Variables:
           TABLE: !Ref Table
           REGION: !Ref Region
           AWSENV: !Ref AWSEnv
       Events:
-        CreateApplications:
+        ListApplicationsFunction:
           Type: Api
           Properties:
-            Path: /applications/
+            Path: /applications
             Method: get
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref ApplicationsTable
+            RestApiId: !Ref passBirdAPI
+          Request:
+            Parameter: Yes
+            QueryStrings:
+              username: true
+     
   
+
   
-Outputs:
-  ApplicationsApi:
-    Description: "API Gateway endpoint URL for Prod stage for Create Application Function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/Applications/"
-  CreateApplicationFunction:
-    Description: "Create Application Lambda Function ARN"
-    Value: !GetAtt CreateApplicationFunction.Arn
-  CreateApplicationFunctionIamRole:
-    Description: "Implicit IAM Role created for Create Application function"
-    Value: !GetAtt CreateApplicationFunctionRole.Arn
-  
-  ListApplicationsFunction:
-    Description: "List Applications Lambda Function ARN"
-    Value: !GetAtt ListApplicationsFunction.Arn
-  ListApplicationsFunctionIamRole:
-    Description: "Implicit IAM Role created for List Applications function"
-    Value: !GetAtt ListApplicationsFunctionRole.Arn
+
   

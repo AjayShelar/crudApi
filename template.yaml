@@ -18,12 +18,7 @@ Globals:
       AllowCredentials: "'*'"
 
 Parameters:
-  AWSAccessKeyID:
-    Type: String
-    Default: AKIAXXKJPZR2EMB6ADGH
-  AWSSecretAccessKey:
-    Type: String
-    Default: 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
+
   Table:
     Type: String
     Default: Applications
